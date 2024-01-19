@@ -5,14 +5,13 @@ const PATH_ROUTER = `${__dirname}`;
 const router = Router();
 
 const cleanFileName = (filename: string) => {
-  return filename.replace(/.ts/, '');
+  return filename.replace(/.route.ts/, '');
 };
 
 readdirSync(PATH_ROUTER).filter((filename) => {
   const cleanName = cleanFileName(filename);
-  if (cleanName !== 'index') {
-    import(`./${cleanName}`).then((moduleRouter) => {
-      console.log(`Se está cargando la ruta /${cleanName}`);
+  if (cleanName !== 'index.ts') {
+    import(`./${cleanName}.route`).then((moduleRouter) => {
       router.use(`/${cleanName}`, moduleRouter.router);
     });
   }
