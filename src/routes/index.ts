@@ -12,7 +12,7 @@ readdirSync(PATH_ROUTER).filter((filename) => {
   const cleanName = cleanFileName(filename);
   if (cleanName !== 'index.ts') {
     import(`./${cleanName}.route`).then((moduleRouter) => {
-      // console.log(`/${cleanName}`);
+      // console.log(`/api/${cleanName}`);
       router.use(`/api/${cleanName}`, moduleRouter.router);
     });
   }
