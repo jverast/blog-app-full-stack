@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import { Auth } from '../interfaces/auth.interface';
 import authService from '../services/auth.service';
 import { handleHttp } from '../utils/error.handle';
+import { generateToken } from '../utils/jwt.handle';
 
 const register = async ({ body }: Request, res: Response) => {
   try {
@@ -17,6 +17,19 @@ const register = async ({ body }: Request, res: Response) => {
   }
 };
 
-const login = (auth: Auth) => {};
+const login = async ({ body }: Request, res: Response) => {
+  try {
+    const user = await authService.login(body);
+
+    if (!user) {
+      return res.status(401).send({ error: 'INVALID_CREDENTIALS' });
+    }
+
+    const token = generateToken(user._id.toString());
+    return res.send({ token });
+  } catch (e) {
+    handleHttp(res, 'LOGIN_ERROR', e);
+  }
+};
 
 export { register, login };
