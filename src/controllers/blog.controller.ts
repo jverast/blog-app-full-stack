@@ -1,13 +1,13 @@
 import { Request, Response } from 'express';
 import { handleHttp } from '../utils/error.handle';
 import blogService from '../services/blog.service';
-import { CustomRequest } from '../interfaces/user.interface';
+import { CustomRequest } from '../interfaces/request.interface';
 
 const getBlog = async ({ params: { id } }: Request, res: Response) => {
   try {
     const blog = await blogService.get(id);
     if (!blog) {
-      return res.status(404).send({ error: 'NOT_FOUND' });
+      throw res.status(404).send({ error: 'NOT_FOUND' });
     }
     return res.send(blog);
   } catch (e) {
@@ -24,21 +24,23 @@ const getBlogs = async (req: Request, res: Response) => {
   }
 };
 
-const createBlog = async ({ body }: CustomRequest, res: Response) => {
+const createBlog = async (req: CustomRequest, res: Response) => {
   try {
-    const blog = await blogService.create(body);
+    const blog = await blogService.create(req.body, req.user);
+
+    if (!blog) {
+      throw new Error('REQUEST_USER_NOT_FOUND');
+    }
+
     return res.status(201).send(blog);
   } catch (e) {
     handleHttp(res, 'CREATE_BLOG_ERROR', e);
   }
 };
 
-const updateBlog = async (
-  { body, params: { id } }: CustomRequest,
-  res: Response
-) => {
+const updateBlog = async (req: CustomRequest, res: Response) => {
   try {
-    const blog = await blogService.update(id, body);
+    const blog = await blogService.update(req.params.id, req.body);
     return res.send(blog);
   } catch (e) {
     handleHttp(res, 'UPDATE_BLOG_ERROR');

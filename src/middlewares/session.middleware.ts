@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { handleHttp } from '../utils/error.handle';
 import { verifyToken } from '../utils/jwt.handle';
-import { CustomRequest } from '../interfaces/user.interface';
+import { CustomRequest } from '../interfaces/request.interface';
 
 const verifyUserSession = (
   req: CustomRequest,

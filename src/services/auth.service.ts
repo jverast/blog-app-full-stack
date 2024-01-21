@@ -13,7 +13,7 @@ const register = async (obj: User) => {
   const password = await encryptPassword(obj.password);
   const user = { ...obj, password };
 
-  const registeredUser = UserModel.create(user);
+  const registeredUser = await UserModel.create(user);
   return registeredUser;
 };
 

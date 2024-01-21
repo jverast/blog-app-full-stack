@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { handleHttp } from '../utils/error.handle';
 import userService from '../services/user.service';
-import { CustomRequest } from '../interfaces/user.interface';
+import { CustomRequest } from '../interfaces/request.interface';
 
 const getUser = async ({ params: { id } }: Request, res: Response) => {
   try {

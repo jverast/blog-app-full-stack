@@ -1,13 +1,9 @@
-import { JwtPayload } from 'jsonwebtoken';
 import { Auth } from './auth.interface';
-import { Request } from 'express';
+import { Blog } from './blog.interface';
 
 export interface User extends Auth {
   name: string;
   email: string;
+  blogs: Blog[];
   description?: string;
-}
-
-export interface CustomRequest extends Request {
-  user?: string | JwtPayload;
 }

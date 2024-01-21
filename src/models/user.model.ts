@@ -7,6 +7,12 @@ const userSchema = new Schema<User>(
     password: { type: String, required: true },
     name: { type: String, required: true },
     email: { type: String, requires: true, unique: true },
+    blogs: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Blog'
+      }
+    ],
     description: { type: String, required: false }
   },
   {
@@ -14,5 +20,13 @@ const userSchema = new Schema<User>(
     timestamps: true
   }
 );
+
+userSchema.set('toJSON', {
+  transform(document, returnedObject) {
+    returnedObject.id = returnedObject._id.toString();
+    delete returnedObject.password;
+    delete returnedObject._id;
+  }
+});
 
 export default model('User', userSchema);

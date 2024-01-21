@@ -1,5 +1,5 @@
 import { Response } from 'express';
-import { CustomRequest } from '../interfaces/user.interface';
+import { CustomRequest } from '../interfaces/request.interface';
 import currentService from '../services/current.service';
 import { handleHttp } from '../utils/error.handle';
 

@@ -1,5 +1,5 @@
 import UserModel from '../models/user.model';
-import { CustomRequest } from '../interfaces/user.interface';
+import { CustomRequest } from '../interfaces/request.interface';
 
 const getUser = async (req: CustomRequest) => {
   if (!('user' in req) || !req.user || typeof req.user !== 'object') {

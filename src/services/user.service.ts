@@ -2,12 +2,20 @@ import { User } from '../interfaces/user.interface';
 import UserModel from '../models/user.model';
 
 const get = async (id: string) => {
-  const blog = await UserModel.findById(id);
+  const blog = await UserModel.findById(id).populate('blogs', {
+    createdAt: false,
+    updatedAt: false,
+    user: false
+  });
   return blog;
 };
 
 const getAll = async () => {
-  const blogs = await UserModel.find({});
+  const blogs = await UserModel.find({}).populate('blogs', {
+    createdAt: false,
+    updatedAt: false,
+    user: false
+  });
   return blogs;
 };
 
