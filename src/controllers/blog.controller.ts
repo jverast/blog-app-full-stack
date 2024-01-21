@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { handleHttp } from '../utils/error.handle';
 import blogService from '../services/blog.service';
+import { CustomRequest } from '../interfaces/user.interface';
 
 const getBlog = async ({ params: { id } }: Request, res: Response) => {
   try {
@@ -23,7 +24,7 @@ const getBlogs = async (req: Request, res: Response) => {
   }
 };
 
-const createBlog = async ({ body }: Request, res: Response) => {
+const createBlog = async ({ body }: CustomRequest, res: Response) => {
   try {
     const blog = await blogService.create(body);
     return res.status(201).send(blog);
@@ -32,7 +33,10 @@ const createBlog = async ({ body }: Request, res: Response) => {
   }
 };
 
-const updateBlog = async ({ body, params: { id } }: Request, res: Response) => {
+const updateBlog = async (
+  { body, params: { id } }: CustomRequest,
+  res: Response
+) => {
   try {
     const blog = await blogService.update(id, body);
     return res.send(blog);
@@ -41,7 +45,7 @@ const updateBlog = async ({ body, params: { id } }: Request, res: Response) => {
   }
 };
 
-const deleteBlog = async ({ params: { id } }: Request, res: Response) => {
+const deleteBlog = async ({ params: { id } }: CustomRequest, res: Response) => {
   try {
     await blogService.remove(id);
     return res.status(204).send();

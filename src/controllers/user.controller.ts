@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { handleHttp } from '../utils/error.handle';
 import userService from '../services/user.service';
+import { CustomRequest } from '../interfaces/user.interface';
 
 const getUser = async ({ params: { id } }: Request, res: Response) => {
   try {
@@ -25,7 +26,7 @@ const getUsers = async (req: Request, res: Response) => {
   }
 };
 
-const deleteUser = async ({ params: { id } }: Request, res: Response) => {
+const deleteUser = async ({ params: { id } }: CustomRequest, res: Response) => {
   try {
     await userService.remove(id);
     res.status(204).send();

@@ -8,8 +8,8 @@ const generateToken = (id: string) => {
   return sign(userForToken, SECRET_KEY, { expiresIn: 600 });
 };
 
-const decodeToken = (token: string) => {
+const verifyToken = (token: string) => {
   return verify(token, SECRET_KEY);
 };
 
-export { generateToken, decodeToken };
+export { generateToken, verifyToken };

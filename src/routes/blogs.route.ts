@@ -6,13 +6,14 @@ import {
   getBlogs,
   updateBlog
 } from '../controllers/blog.controller';
+import { verifyUserSession } from '../middlewares/session.middleware';
 
 const router = Router();
 
 router.get('/:id', getBlog);
 router.get('/', getBlogs);
-router.post('/', createBlog);
-router.put('/:id', updateBlog);
-router.delete('/:id', deleteBlog);
+router.post('/', verifyUserSession, createBlog);
+router.put('/:id', verifyUserSession, updateBlog);
+router.delete('/:id', verifyUserSession, deleteBlog);
 
 export { router };
