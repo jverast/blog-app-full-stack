@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "tsc": "tsc",
+    "start": "node ./dist/app.js",
     "dev": "nodemon ./src/app.ts",
     "start:file": "ts-node"
   },
