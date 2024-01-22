@@ -15,13 +15,9 @@ const verifyUserSession = (
     }
 
     const token = authorization.replace(/Bearer /, '');
-    const isTokenValid = verifyToken(token);
+    const payload = verifyToken(token);
 
-    if (!isTokenValid) {
-      return res.status(401).send({ error: 'INVALID_TOKEN_ERROR' });
-    }
-
-    req.user = isTokenValid;
+    req.user = payload;
 
     next();
   } catch (e) {
