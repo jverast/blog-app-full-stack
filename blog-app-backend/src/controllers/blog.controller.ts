@@ -17,7 +17,7 @@ const getBlog = async ({ params: { id } }: Request, res: Response) => {
 
 const getBlogs = async (req: Request, res: Response) => {
   try {
-    const blogs = await blogService.getAll();
+    const blogs = await blogService.getAll(req);
     return res.send(blogs);
   } catch (e) {
     handleHttp(res, 'GET_BLOGS_ERROR');

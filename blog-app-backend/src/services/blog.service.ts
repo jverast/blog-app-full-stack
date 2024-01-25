@@ -3,23 +3,47 @@ import UserModel from '../models/user.model';
 import BlogModel from '../models/blog.model';
 import { RequestUser } from '../interfaces/request.interface';
 import { isUserDocument } from '../utils/user.narrow';
+import { Request } from 'express';
+import { getLastYear } from '../utils/blog.handle';
 
 const get = async (id: string) => {
-  const blog = await BlogModel.findById(id).populate('user', {
-    createdAt: false,
-    updatedAt: false,
-    blogs: false
-  });
+  const blog = await BlogModel.findById(id);
   return blog;
 };
 
-const getAll = async () => {
-  const blogs = await BlogModel.find({}).populate('user', {
-    createdAt: false,
-    updatedAt: false,
-    blogs: false
-  });
-  return blogs;
+const getAll = async (req: Request) => {
+  const { latest, tags } = req.query;
+
+  if (latest && !tags && latest === 'true') {
+    const lastYear = getLastYear();
+    return await BlogModel.aggregate([
+      {
+        $match: { createdAt: { $gte: lastYear } }
+      }
+    ]);
+  }
+
+  if (!latest && tags) {
+    const tagList =
+      String(tags).indexOf(',') === -1 ? [tags] : String(tags).split(',');
+    return await BlogModel.aggregate([
+      {
+        $match: { tags: { $in: tagList } }
+      }
+    ]);
+  }
+
+  if (latest && latest === 'true' && tags) {
+    const lastYear = getLastYear();
+    const tagList =
+      String(tags).indexOf(',') === -1 ? [tags] : String(tags).split(',');
+    return await BlogModel.aggregate([
+      {
+        $match: { createdAt: { $gte: lastYear }, tags: { $in: tagList } }
+      }
+    ]);
+  }
+  return await BlogModel.find({});
 };
 
 const create = async (obj: Blog, user: RequestUser) => {
