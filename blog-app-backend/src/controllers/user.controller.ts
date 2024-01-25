@@ -26,6 +26,15 @@ const getUsers = async (req: Request, res: Response) => {
   }
 };
 
+const updateUser = async ({ params: { id }, body }: Request, res: Response) => {
+  try {
+    const updatedUser = await userService.update(id, body);
+    return res.send(updatedUser);
+  } catch (e) {
+    handleHttp(res, 'UPDATE_USER_ERROR');
+  }
+};
+
 const deleteUser = async ({ params: { id } }: CustomRequest, res: Response) => {
   try {
     await userService.remove(id);
@@ -35,4 +44,4 @@ const deleteUser = async ({ params: { id } }: CustomRequest, res: Response) => {
   }
 };
 
-export { getUser, getUsers, deleteUser };
+export { getUser, getUsers, updateUser, deleteUser };

@@ -93,42 +93,4 @@ const validateRegisterAuth = [
   }
 ];
 
-const validateLoginAuth = [
-  body('username')
-    .isString()
-    .trim()
-    .notEmpty()
-    .withMessage('Invalid Username: required field')
-    .custom(async (value) => {
-      if (!/^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/.test(value)) {
-        throw new Error('Invalid Username: incorrect format');
-      }
-    }),
-
-  body('password')
-    .isString()
-    .trim()
-    .notEmpty()
-    .withMessage('Invalid Password: required field')
-    .custom(async (value) => {
-      if (
-        !/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/.test(
-          value
-        )
-      ) {
-        throw new Error('Invalid Password: incorrect format');
-      }
-    }),
-
-  (req: Request, res: Response, next: NextFunction) => {
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-
-    next();
-  }
-];
-
-export { validateRegisterAuth, validateLoginAuth };
+export { validateRegisterAuth };

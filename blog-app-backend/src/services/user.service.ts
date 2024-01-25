@@ -2,34 +2,24 @@ import { User } from '../interfaces/user.interface';
 import UserModel from '../models/user.model';
 
 const get = async (id: string) => {
-  /* const blog = await UserModel.findById(id).populate('blogs', {
-    createdAt: false,
-    updatedAt: false,
-    user: false
-  }); */
-  const blog = await UserModel.findById(id);
-  return blog;
+  const user = await UserModel.findById(id);
+  return user;
 };
 
 const getAll = async () => {
-  const blogs = await UserModel.find({});
-  return blogs;
-};
-
-const create = async (obj: User) => {
-  const createdBlog = await UserModel.create(obj);
-  return createdBlog;
+  const users = await UserModel.find({});
+  return users;
 };
 
 const update = async (id: string, body: User) => {
-  const updatedBlog = await UserModel.findByIdAndUpdate(id, body, {
+  const updatedUser = await UserModel.findByIdAndUpdate(id, body, {
     new: true
   });
-  return updatedBlog;
+  return updatedUser;
 };
 
 const remove = async (id: string) => {
   await UserModel.findByIdAndDelete(id);
 };
 
-export default { create, getAll, get, update, remove };
+export default { getAll, get, update, remove };
