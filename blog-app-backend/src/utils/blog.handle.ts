@@ -33,4 +33,9 @@ const buildFileName = (file: Express.Multer.File) => {
   return `${fileName}.${fileExt}`;
 };
 
-export { getLastYear, validateFile, buildFileName };
+const buildTagList = (tags: string | string[]) => {
+  if (typeof tags === 'object') return tags;
+  return tags.split(/,\s?/).map((tag) => tag.trim());
+};
+
+export { getLastYear, validateFile, buildFileName, buildTagList };

@@ -4,7 +4,12 @@ import BlogModel from '../models/blog.model';
 import { RequestUser, RequestFile } from '../interfaces/request.interface';
 import { isUserDocument } from '../utils/user.narrow';
 import { Request } from 'express';
-import { getLastYear, validateFile, buildFileName } from '../utils/blog.handle';
+import {
+  getLastYear,
+  validateFile,
+  buildFileName,
+  buildTagList
+} from '../utils/blog.handle';
 import fs from 'node:fs';
 
 const get = async (id: string) => {
@@ -64,10 +69,13 @@ const create = async (blog: Blog, file: RequestFile, user: RequestUser) => {
     `./src/uploads/images/blog/featured/${newFileName}`
   );
 
+  const tags = buildTagList(blog.tags);
+
   const blogToCreate = {
     ...blog,
     user: user.id,
-    featuredImage: newFileName
+    featuredImage: newFileName,
+    tags
   };
   const createdBlog = await BlogModel.create(blogToCreate);
 

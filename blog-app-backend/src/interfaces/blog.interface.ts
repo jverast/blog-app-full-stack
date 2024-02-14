@@ -5,6 +5,6 @@ export interface Blog {
   content: string;
   excerpt: string;
   featuredImage: string;
-  tags: string[];
+  tags: string | string[];
   user: Types.ObjectId;
 }
