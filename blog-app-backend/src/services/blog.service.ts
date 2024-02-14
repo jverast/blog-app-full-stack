@@ -1,10 +1,11 @@
 import { Blog } from '../interfaces/blog.interface';
 import UserModel from '../models/user.model';
 import BlogModel from '../models/blog.model';
-import { RequestUser } from '../interfaces/request.interface';
+import { RequestUser, RequestFile } from '../interfaces/request.interface';
 import { isUserDocument } from '../utils/user.narrow';
 import { Request } from 'express';
-import { getLastYear } from '../utils/blog.handle';
+import { getLastYear, validateFile, buildFileName } from '../utils/blog.handle';
+import fs from 'node:fs';
 
 const get = async (id: string) => {
   const blog = await BlogModel.findById(id);
@@ -46,18 +47,34 @@ const getAll = async (req: Request) => {
   return await BlogModel.find({});
 };
 
-const create = async (obj: Blog, user: RequestUser) => {
+const create = async (blog: Blog, file: RequestFile, user: RequestUser) => {
   if (!isUserDocument(user)) {
-    return null;
+    throw new Error('INVALID_USER_REQUEST');
   }
 
-  const blogToCreate = { ...obj, user: user.id };
+  const validatedFile = validateFile(file);
+  const newFileName = buildFileName(validatedFile);
+
+  if (!newFileName) {
+    throw new Error('UNDEFINED_FILENAME_ERROR');
+  }
+
+  fs.renameSync(
+    validatedFile.path,
+    `./src/uploads/images/blog/featured/${newFileName}`
+  );
+
+  const blogToCreate = {
+    ...blog,
+    user: user.id,
+    featuredImage: newFileName
+  };
   const createdBlog = await BlogModel.create(blogToCreate);
 
   const userToUpdate = await UserModel.findById(user.id);
 
   if (!userToUpdate) {
-    return null;
+    throw new Error('FAILED_TO_CREATE_BLOG');
   }
 
   userToUpdate.blogs = userToUpdate.blogs

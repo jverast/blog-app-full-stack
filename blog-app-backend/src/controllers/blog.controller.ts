@@ -7,7 +7,7 @@ const getBlog = async ({ params: { id } }: Request, res: Response) => {
   try {
     const blog = await blogService.get(id);
     if (!blog) {
-      throw res.status(404).send({ error: 'NOT_FOUND' });
+      return res.status(404).send({ error: 'NO_BLOG_FOUND_ERROR' });
     }
     return res.send(blog);
   } catch (e) {
@@ -26,14 +26,20 @@ const getBlogs = async (req: Request, res: Response) => {
 
 const createBlog = async (req: CustomRequest, res: Response) => {
   try {
-    const blog = await blogService.create(req.body, req.user);
+    const blog = await blogService.create(req.body, req.file, req.user);
 
     if (!blog) {
-      throw new Error('REQUEST_USER_NOT_FOUND');
+      return res.status(404).send({ error: 'REQUEST_USER_NOT_FOUND' });
     }
 
     return res.status(201).send(blog);
-  } catch (e) {
+  } catch (e: unknown) {
+    if (e instanceof Error) {
+      if (e.message === 'INVALID_USER_REQUEST') {
+        return res.status(400).send({ error: e.message });
+      }
+    }
+
     handleHttp(res, 'CREATE_BLOG_ERROR', e);
   }
 };

@@ -8,7 +8,6 @@ import { logger } from './middlewares/log.middleware';
 import { unknownEnpoint } from './middlewares/unknown.middleware';
 
 const app = express();
-const PORT = process.env.PORT || 3001;
 
 db()
   .then(() => {
@@ -26,6 +25,4 @@ app.use(router);
 
 app.use(unknownEnpoint);
 
-app.listen(PORT, () => {
-  console.log(`App is running on http://localhost:${PORT}`);
-});
+export default app;

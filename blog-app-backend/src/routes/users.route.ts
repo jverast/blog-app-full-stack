@@ -9,6 +9,10 @@ import { verifyUserSession } from '../middlewares/session.middleware';
 
 const router = Router();
 
+/**
+ * Pending: add user roles: admin, editor, etc.
+ */
+
 router.get('/:id', verifyUserSession, getUser);
 router.get('/', verifyUserSession, getUsers);
 router.put('/:id', verifyUserSession, updateUser);

@@ -6,3 +6,4 @@ export interface CustomRequest extends Request {
 }
 
 export type RequestUser = string | JwtPayload | undefined;
+export type RequestFile = Express.Multer.File | undefined;
