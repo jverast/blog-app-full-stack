@@ -9,9 +9,9 @@ import {
 export default function Header() {
   return (
     <>
-      <header className="bg-zinc-900 dark:text-white">
-        <div className="grid grid-cols-3 gap-y-5 items-center text-center py-3 px-3 container mx-auto">
-          <div className="lg:order-last lg:col-span-3 grid divide-y divide-gray-700">
+      <header className="header header--home bg-zinc-900 dark:text-white">
+        <section className="header__navbar grid grid-cols-6 gap-y-5 items-center text-center p-5 container mx-auto md:px-8 lg:px-16">
+          <div className="lg:order-last lg:col-span-6 grid divide-y divide-gray-800">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -26,7 +26,7 @@ export default function Header() {
                 d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
               />
             </svg>
-            <ul className="hidden lg:flex flex-row justify-center gap-x-10 pt-3">
+            <ul className="hidden lg:flex flex-row justify-center gap-x-10 pt-5">
               <li>
                 <a
                   className="text-gray-400 hover:text-white transition ease-in-out duration-300"
@@ -77,7 +77,9 @@ export default function Header() {
               </li>
             </ul>
           </div>
-          <div className="text-4xl font-semibold font-display">My App</div>
+          <div className="col-span-4 text-4xl font-semibold font-display">
+            My App
+          </div>
           <div className="flex justify-end items-center flex-row gap-x-3 lg:self-end">
             <span className="text-xs tracking-widest hidden lg:block">
               SEARCH
@@ -89,7 +91,12 @@ export default function Header() {
               <FaFacebookF /> <FaTwitter /> <FaInstagram /> <FaPinterest />
             </div>
           </div>
-        </div>
+        </section>
+        <section className="header__content grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2 container mx-auto mt-12 px-8 lg:px-16">
+          <div className="md:col-span-2 lg:col-span-2 lg:row-span-2 h-[280px] md:h-[480px] border bg-gray-200 opacity-25"></div>
+          <div className="h-[280px] md:h-[240px]  bg-cyan-600 opacity-25"></div>
+          <div className="h-[240px] hidden md:block bg-black opacity-25"></div>
+        </section>
       </header>
     </>
   );
