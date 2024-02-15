@@ -1,12 +1,13 @@
-import Pagination from './Pagination';
+import Extra from '../Extra';
+import Pagination from '../Pagination';
 
-export default function Content() {
+export default function Main() {
   const blogs = ['1', '2', '3', '4', '5', '6'];
 
   return (
     <>
-      <main className="content">
-        <section className="content__masonry masonry grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 container mx-auto px-12 lg:px-36 mt-12">
+      <main className="main">
+        <section className="masonry grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 container mx-auto px-12 lg:px-32 mt-12">
           {blogs.map((blog) => (
             <div
               key={blog}
@@ -43,6 +44,7 @@ export default function Content() {
           ))}
         </section>
         <Pagination />
+        <Extra />
       </main>
     </>
   );
