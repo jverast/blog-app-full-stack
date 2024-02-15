@@ -2,7 +2,10 @@
 export default {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
-    extend: {}
+    fontFamily: {
+      display: ['"Century Gothic"'],
+      body: ['"Open Sans"']
+    }
   },
   plugins: []
 };
