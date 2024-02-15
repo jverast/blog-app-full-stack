@@ -1,3 +1,5 @@
+import Pagination from './Pagination';
+
 export default function Content() {
   const blogs = ['1', '2', '3', '4', '5', '6'];
 
@@ -8,7 +10,7 @@ export default function Content() {
           {blogs.map((blog) => (
             <div
               key={blog}
-              className="masonry__brick flex flex-col gap-y-5 shadow-lg pb-12"
+              className="masonry__brick flex flex-col gap-y-5 shadow-lg border pb-12"
             >
               <div className="image w-full h-72 bg-slate-300"></div>
               <div className="flex flex-col gap-y-3 px-6">
@@ -40,6 +42,7 @@ export default function Content() {
             </div>
           ))}
         </section>
+        <Pagination />
       </main>
     </>
   );
