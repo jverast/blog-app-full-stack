@@ -12,7 +12,30 @@ export default function SocialMedia({ position }: { position: Position }) {
     <>
       <div className="col-span-3 lg:col-auto hidden lg:block lg:order-first text-start self-end">
         <div className={`flex flex-row gap-3 text-xl justify-${position}`}>
-          <FaFacebookF /> <FaTwitter /> <FaInstagram /> <FaPinterest />
+          <a
+            className="hover:scale-110 transition ease-in-out duration-300"
+            href="#"
+          >
+            <FaFacebookF />
+          </a>
+          <a
+            className="hover:scale-110 transition ease-in-out duration-300"
+            href="#"
+          >
+            <FaTwitter />
+          </a>
+          <a
+            className="hover:scale-110 transition ease-in-out duration-300"
+            href="#"
+          >
+            <FaInstagram />
+          </a>
+          <a
+            className="hover:scale-110 transition ease-in-out duration-300"
+            href="#"
+          >
+            <FaPinterest />
+          </a>
         </div>
       </div>
     </>
