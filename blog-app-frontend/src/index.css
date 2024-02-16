@@ -23,3 +23,74 @@
     src: url(/fonts/LibreBaskerville-Regular.ttf);
   }
 }
+
+.search-box {
+  --box-size: 45px;
+
+  position: relative;
+  display: block;
+  width: 100%;
+  max-width: var(--box-size);
+
+  transition: 0.2s linear;
+
+  .search-box__input {
+    display: block;
+    appearance: none;
+    width: 100%;
+
+    border: none;
+    outline: none;
+    border-radius: var(--box-size);
+
+    background-color: #fff;
+
+    padding: calc(var(--box-size) / 3.666666666);
+    color: #24233a;
+    font-size: calc(var(--box-size) / 3.333333333);
+    cursor: pointer;
+
+    transition: 0.2s linear;
+
+    &::placeholder {
+      color: #fff;
+      transition: 0.2s linear;
+    }
+  }
+
+  .search-box__icon {
+    position: absolute;
+    right: calc(var(--box-size) / 2);
+    top: 50%;
+    transform: translate(50%, -50%);
+
+    width: calc(var(--box-size) / 2.25);
+    height: calc(var(--box-size) / 2.25);
+
+    pointer-events: none;
+
+    path {
+      fill: #24233a;
+      transition: 0.2s linear;
+    }
+  }
+
+  &:focus-within {
+    max-width: 250px;
+
+    .search-box__input {
+      background-color: #fff;
+      padding-inline: 20px;
+
+      &::placeholder {
+        color: #24233a;
+      }
+    }
+
+    .search-box__icon {
+      path {
+        fill: #000;
+      }
+    }
+  }
+}

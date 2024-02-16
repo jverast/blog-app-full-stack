@@ -1,5 +1,5 @@
 import { Position } from '../../types';
-import SocialMedia from '../SocialMedia';
+import SocialMedia from '../../hocs/withSocialMedia';
 
 export default function About() {
   const position: Position = 'center';
