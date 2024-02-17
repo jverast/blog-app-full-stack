@@ -14,9 +14,9 @@ export default function Tags() {
   ];
 
   return (
-    <div className="extra__tags col-span-full">
+    <div className="extra__tags col-span-full pb-24">
       <h3 className="text-center text-2xl p-4 font-semibold">Tags</h3>
-      <div className="flex flex-wrap justify-center gap-3 w-4/5 lg:w-3/5 mx-auto">
+      <div className="flex flex-wrap justify-center gap-3 px-4 sm:px-16 md:px-32 lg:px-48 mx-auto">
         {tags.map((tag) => (
           <a
             key={tag}
