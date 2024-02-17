@@ -3,8 +3,8 @@ import { FaSistrix } from 'react-icons/fa';
 export default function SearchForm() {
   return (
     <>
-      <article className="header__search-form hidden lg:flex justify-end items-center flex-row gap-x-3 lg:self-end">
-        <form className="w-full flex justify-end">
+      <article className="header__search-form">
+        <form className="w-full flex lg:justify-end">
           <div className="search-box">
             <input
               id="search"

@@ -25,7 +25,7 @@ function SocialMedia({ position }: { position: Position }) {
 
   return (
     <>
-      <div className="col-span-3 lg:col-auto hidden lg:block lg:order-first text-start self-end">
+      <div className="relative col-span-3 lg:col-auto hidden lg:block lg:order-first text-start self-end">
         <div className={`flex flex-row gap-3 text-xl justify-${position}`}>
           {social.map((s, index) => (
             <a
