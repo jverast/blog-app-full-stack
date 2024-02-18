@@ -60,7 +60,7 @@ const create = async (blog: Blog, file: RequestFile, user: RequestUser) => {
   const validatedFile = validateFile(file);
   const newFileName = buildFileName(validatedFile);
 
-  if (!newFileName) {
+  if (/undefined/.test(newFileName)) {
     throw new Error('UNDEFINED_FILENAME_ERROR');
   }
 
@@ -77,18 +77,16 @@ const create = async (blog: Blog, file: RequestFile, user: RequestUser) => {
     featuredImage: newFileName,
     tags
   };
-  const createdBlog = await BlogModel.create(blogToCreate);
 
+  const createdBlog = await BlogModel.create(blogToCreate);
   const userToUpdate = await UserModel.findById(user.id);
 
-  if (!userToUpdate) {
-    throw new Error('FAILED_TO_CREATE_BLOG');
+  if (userToUpdate) {
+    userToUpdate.blogs = userToUpdate.blogs
+      ? userToUpdate.blogs.concat(createdBlog.id)
+      : [];
+    await userToUpdate.save();
   }
-
-  userToUpdate.blogs = userToUpdate.blogs
-    ? userToUpdate.blogs.concat(createdBlog.id)
-    : [];
-  await userToUpdate.save();
 
   return createdBlog;
 };

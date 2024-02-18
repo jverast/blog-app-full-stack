@@ -4,7 +4,7 @@ import UserModel from '../models/user.model';
 import { comparePassword, encryptPassword } from '../utils/encrypt.handle';
 
 const register = async (obj: User) => {
-  const isUser = await UserModel.findOne({ username: obj.username });
+  const isUser = await UserModel.findOne({ email: obj.email });
 
   if (isUser) {
     return null;
@@ -17,8 +17,8 @@ const register = async (obj: User) => {
   return registeredUser;
 };
 
-const login = async ({ username, password }: Auth) => {
-  const isUser = await UserModel.findOne({ username });
+const login = async ({ email, password }: Auth) => {
+  const isUser = await UserModel.findOne({ email });
 
   if (!isUser || !(await comparePassword(password, isUser.password))) {
     return null;

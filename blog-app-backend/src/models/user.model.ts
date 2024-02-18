@@ -5,7 +5,7 @@ const userSchema = new Schema<User>(
   {
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    name: { type: String, required: true },
+    name: { type: String },
     email: { type: String, requires: true, unique: true },
     blogs: [
       {
@@ -13,7 +13,7 @@ const userSchema = new Schema<User>(
         ref: 'Blog'
       }
     ],
-    description: { type: String, required: false }
+    description: { type: String }
   },
   {
     versionKey: false,
