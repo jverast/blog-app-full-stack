@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Footer from './components/Footer';
 import Auth from './pages/Auth';
 import Login from './pages/Auth/Login';
+import Register from './pages/Auth/Register';
 
 export default function App() {
   return (
@@ -21,7 +22,7 @@ export default function App() {
           path="auth/register"
           element={
             <Auth>
-              <h1>Register</h1>
+              <Register />
             </Auth>
           }
         />

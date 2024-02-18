@@ -1,4 +1,5 @@
-import { FaLock, FaUser } from 'react-icons/fa';
+import { FaLock, FaAt } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 export default function Login() {
   return (
@@ -12,17 +13,19 @@ export default function Login() {
           />
         </div>
         <div className="flex flex-col gap-y-8 px-6">
-          <div className="absolute top-4 right-12 lg:right-14 text-white">
+          <div className="absolute top-4 right-12 lg:right-14 text-dark dark:text-white">
             New User?{' '}
-            <a
-              className="text-sky-400 hover:underline underline-offset-2 ms-1"
-              href="/auth/register"
+            <Link
+              className="text-sky-500 dark:text-sky-400 hover:underline underline-offset-2 ms-1"
+              to="/auth/register"
             >
               Sign Up
-            </a>
+            </Link>
           </div>
           <section>
-            <h3 className="text-3xl font-bold capitalize">welcome back!</h3>
+            <h3 className="text-3xl font-bold capitalize pb-1">
+              welcome back!
+            </h3>
             <p className="text-gray-500 dark:text-gray-400">
               Login to continue
             </p>
@@ -36,7 +39,7 @@ export default function Login() {
                 placeholder="Email"
                 autoComplete="off"
               />
-              <FaUser className="text-neutral-800 absolute top-1/3 left-3 peer-focus:w-0 peer-focus:opacity-0 transition-all ease-in-out duration-200" />
+              <FaAt className="text-neutral-800 absolute top-1/3 left-3 peer-focus:w-0 peer-focus:opacity-0 transition-all ease-in-out duration-200" />
             </div>
             <div className="relative group">
               <input
