@@ -1,4 +1,4 @@
-import SocialMedia from '../../hocs/withSocialMedia';
+import SocialMediaWithVariant from '../../../hocs/withSocialMedia';
 import Navbar from './Navbar';
 
 export default function Navigation() {
@@ -13,7 +13,7 @@ export default function Navigation() {
           My App
         </a>
       </h1>
-      <SocialMedia position="start" />
+      <SocialMediaWithVariant position="start" />
     </section>
   );
 }

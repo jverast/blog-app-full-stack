@@ -1,30 +1,31 @@
 import { useRef } from 'react';
 import SearchForm from './SearchForm';
+import { Link } from 'react-router-dom';
 
 const links = [
   {
     name: 'home',
-    href: '#'
+    to: '#'
   },
   {
     name: 'categories',
-    href: '#'
+    to: '#'
   },
   {
     name: 'blog',
-    href: '#'
+    to: '#'
   },
   {
     name: 'about',
-    href: '#'
+    to: '#'
   },
   {
     name: 'contact',
-    href: '#'
+    to: '#'
   },
   {
     name: 'login',
-    href: '#'
+    to: '/auth/login'
   }
 ];
 
@@ -79,18 +80,18 @@ export default function Navbar() {
             </svg>
           </div>
           <ul className="px-8 sm:px-16 flex flex-col justify-center items-start gap-y-4 text-start lg:pt-5 divide-y divide-slate-800 lg:flex-row lg:gap-x-8 lg:px-0 lg:divide-y-0">
-            {links.map(({ name, href }) => (
+            {links.map(({ name, to }) => (
               <li className="w-full lg:w-auto" key={name}>
-                <a
+                <Link
                   className={`hover:text-white transition ease-in-out duration-300 pt-3 block lg:p-2 lg:inline ${
                     name === 'login'
                       ? 'text-slate-900 uppercase text-sm bg-white hover:bg-sky-600 font-bold block text-center w-24 mx-auto mt-6 p-2 lg:w-0 lg:m-0 lg:p-2'
                       : 'text-gray-400 capitalize w-full'
                   }`}
-                  href={href}
+                  to={to}
                 >
                   {name}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>

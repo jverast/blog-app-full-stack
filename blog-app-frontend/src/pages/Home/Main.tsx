@@ -1,5 +1,5 @@
-import Extra from '../Extra';
-import Pagination from '../Pagination';
+import Extra from '../../components/Extra';
+import Pagination from '../../components/Pagination';
 
 export default function Main() {
   const blogs = ['1', '2', '3', '4', '5', '6'];
