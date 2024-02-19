@@ -1,3 +1,4 @@
+import SearchFormWithVariant from '../../../hocs/withSearchForm';
 import SocialMediaWithVariant from '../../../hocs/withSocialMedia';
 import Navbar from './Navbar';
 
@@ -13,6 +14,7 @@ export default function Navigation() {
           My App
         </a>
       </h1>
+      <SearchFormWithVariant variant="header" />
       <SocialMediaWithVariant position="start" />
     </section>
   );
