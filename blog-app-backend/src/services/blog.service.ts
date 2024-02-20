@@ -50,6 +50,7 @@ const getAll = async (req: Request) => {
       }
     ]);
   }
+
   return await BlogModel.find({});
 };
 
@@ -100,8 +101,25 @@ const update = async (id: string, body: Blog) => {
   return updatedBlog;
 };
 
-const remove = async (id: string) => {
+const remove = async (id: string, user: RequestUser) => {
+  // Eliminar el blog de la list de blogs del usuario
+  if (!isUserDocument(user)) {
+    throw new Error('NO_USER_EXISTS_ERROR');
+  }
+
+  const userToUpdate = await UserModel.findById(user.id);
+  if (!userToUpdate) {
+    throw new Error('INVALID_USER_ERROR');
+  }
+
   await BlogModel.findByIdAndDelete(id);
+
+  userToUpdate.blogs = userToUpdate.blogs?.filter(
+    (blog) => String(blog) !== id
+  );
+  await userToUpdate.save();
+
+  // Eliminar la imagen de uploads/
 };
 
 export default { create, getAll, get, update, remove };

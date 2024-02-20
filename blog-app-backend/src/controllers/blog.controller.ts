@@ -53,9 +53,9 @@ const updateBlog = async (req: CustomRequest, res: Response) => {
   }
 };
 
-const deleteBlog = async ({ params: { id } }: CustomRequest, res: Response) => {
+const deleteBlog = async (req: CustomRequest, res: Response) => {
   try {
-    await blogService.remove(id);
+    await blogService.remove(req.params.id, req.user);
     return res.status(204).send();
   } catch (e) {
     handleHttp(res, 'DELETE_BLOG_ERROR');
