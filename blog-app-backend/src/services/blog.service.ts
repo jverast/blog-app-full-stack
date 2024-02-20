@@ -9,7 +9,8 @@ import {
   validateFile,
   buildFileName,
   buildTagList,
-  buildExcerpt
+  buildExcerpt,
+  removeFile
 } from '../utils/blog.util';
 import fs from 'node:fs';
 
@@ -112,6 +113,9 @@ const remove = async (id: string, user: RequestUser) => {
     throw new Error('INVALID_USER_ERROR');
   }
 
+  const blogToDelete = await BlogModel.findById(id);
+  const featuredImage = blogToDelete?.featuredImage;
+
   await BlogModel.findByIdAndDelete(id);
 
   userToUpdate.blogs = userToUpdate.blogs?.filter(
@@ -120,6 +124,7 @@ const remove = async (id: string, user: RequestUser) => {
   await userToUpdate.save();
 
   // Eliminar la imagen de uploads/
+  featuredImage && removeFile(featuredImage);
 };
 
 export default { create, getAll, get, update, remove };

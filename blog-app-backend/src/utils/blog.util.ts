@@ -6,6 +6,7 @@ import {
   EXCERPT_SIZE,
   MAX_FILE_SIZE
 } from '../config/constants.config';
+import fs from 'node:fs';
 
 const getLastYear = () => {
   const current = new Date();
@@ -55,4 +56,16 @@ const buildExcerpt = (content: string) => {
   return element.textContent as string;
 };
 
-export { getLastYear, validateFile, buildFileName, buildTagList, buildExcerpt };
+const removeFile = (filename: string) => {
+  const path = `./src/uploads/images/blog/featured/${filename}`;
+  fs.unlinkSync(path);
+};
+
+export {
+  getLastYear,
+  validateFile,
+  buildFileName,
+  buildTagList,
+  buildExcerpt,
+  removeFile
+};
