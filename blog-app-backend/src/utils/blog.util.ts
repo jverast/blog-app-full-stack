@@ -1,5 +1,11 @@
 import { RequestFile } from '../interfaces/request.interface';
 import { existsSync } from 'node:fs';
+import jsdom from 'jsdom';
+import {
+  ALLOWED_FILE_EXT,
+  EXCERPT_SIZE,
+  MAX_FILE_SIZE
+} from '../config/constants.config';
 
 const getLastYear = () => {
   const current = new Date();
@@ -10,18 +16,18 @@ const getLastYear = () => {
 
 const validateFile = (file: RequestFile) => {
   if (!file || !existsSync(file.path)) {
-    throw new Error('NO_FILE_STORED');
+    throw new Error('NO_FILE_STORED_ERROR');
   }
 
   const fileExt = file.originalname.split('.')[1];
-  const allowedExtensions = ['jpg', 'jpeg', 'png', 'webp'];
+  const allowedExtensions = ALLOWED_FILE_EXT;
 
   if (allowedExtensions.indexOf(fileExt) === -1) {
-    throw new Error('EXTENSION_NOT_ALLOWED');
+    throw new Error('INVALID_EXTENSION_FILE_ERROR');
   }
 
-  if (file.size > 5000000000) {
-    throw new Error('MAX_SIZE_ALLOWED');
+  if (file.size > MAX_FILE_SIZE) {
+    throw new Error('MAX_FILE_SIZE_ERROR');
   }
 
   return file;
@@ -38,4 +44,15 @@ const buildTagList = (tags: string | string[]) => {
   return tags.split(/,\s?/).map((tag) => tag.trim());
 };
 
-export { getLastYear, validateFile, buildFileName, buildTagList };
+const buildExcerpt = (content: string) => {
+  const dom = new jsdom.JSDOM();
+  const document = dom.window.document;
+  const element = document.createElement('div');
+
+  const slicedContent = content.slice(0, EXCERPT_SIZE).replace(/\\n/g, '');
+
+  element.innerHTML = slicedContent;
+  return element.textContent as string;
+};
+
+export { getLastYear, validateFile, buildFileName, buildTagList, buildExcerpt };

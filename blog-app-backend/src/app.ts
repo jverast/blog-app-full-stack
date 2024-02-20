@@ -1,25 +1,19 @@
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
-import db from './config/mognoose.config';
+import database from './config/database.config';
 
 import { router } from './routes';
-import { logger } from './middlewares/log.middleware';
+import { httpRequestLogger } from './middlewares/logger.middleware';
 import { unknownEnpoint } from './middlewares/unknown.middleware';
 
 const app = express();
 
-db()
-  .then(() => {
-    console.log('Connected to MongoDB');
-  })
-  .catch((e) => {
-    console.log('Error connecting to MongoDB', e);
-  });
+database.connection();
 
 app.use(cors());
 app.use(express.json());
-app.use(logger);
+app.use(httpRequestLogger);
 
 app.use(router);
 

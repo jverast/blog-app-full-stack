@@ -18,7 +18,7 @@ import { body, validationResult } from 'express-validator';
 /**
  * PASSWORD VALIDATION
  * This regex will enforce these rules:
-
+    
     At least one upper case English letter, (?=.*?[A-Z])
     At least one lower case English letter, (?=.*?[a-z])
     At least one digit, (?=.*?[0-9])
@@ -56,20 +56,20 @@ const validateRegisterAuth = [
       }
     }),
 
-  body('name')
-    .isString()
-    .trim()
-    .notEmpty()
-    .withMessage('Invalid Name: required field')
-    .custom(async (value) => {
-      if (
-        !/^([a-zA-Z]{2,}\s[a-zA-Z]{1,}['\-]?[a-zA-Z]{2,}\s?([a-zA-Z]{1,})?)$/.test(
-          value
-        )
-      ) {
-        throw new Error('Invalid Name: incorrect format');
-      }
-    }),
+  // body('name')
+  //   .isString()
+  //   .trim()
+  //   .notEmpty()
+  //   .withMessage('Invalid Name: required field')
+  //   .custom(async (value) => {
+  //     if (
+  //       !/^([a-zA-Z]{2,}\s[a-zA-Z]{1,}['\-]?[a-zA-Z]{2,}\s?([a-zA-Z]{1,})?)$/.test(
+  //         value
+  //       )
+  //     ) {
+  //       throw new Error('Invalid Name: incorrect format');
+  //     }
+  //   }),
 
   body('email')
     .isString()

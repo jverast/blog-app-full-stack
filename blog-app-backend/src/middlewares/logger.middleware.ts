@@ -1,6 +1,6 @@
 import morgan from 'morgan';
 
-const logger = morgan((tokens, req, res) => {
+export const httpRequestLogger = morgan((tokens, req, res) => {
   return [
     tokens.method(req, res),
     tokens.url(req, res),
@@ -11,5 +11,3 @@ const logger = morgan((tokens, req, res) => {
     'ms'
   ].join(' ');
 });
-
-export { logger };

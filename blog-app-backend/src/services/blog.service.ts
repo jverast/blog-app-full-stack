@@ -2,14 +2,15 @@ import { Blog } from '../interfaces/blog.interface';
 import UserModel from '../models/user.model';
 import BlogModel from '../models/blog.model';
 import { RequestUser, RequestFile } from '../interfaces/request.interface';
-import { isUserDocument } from '../utils/user.narrow';
+import { isUserDocument } from '../utils/user.util';
 import { Request } from 'express';
 import {
   getLastYear,
   validateFile,
   buildFileName,
-  buildTagList
-} from '../utils/blog.handle';
+  buildTagList,
+  buildExcerpt
+} from '../utils/blog.util';
 import fs from 'node:fs';
 
 const get = async (id: string) => {
@@ -54,15 +55,16 @@ const getAll = async (req: Request) => {
 
 const create = async (blog: Blog, file: RequestFile, user: RequestUser) => {
   if (!isUserDocument(user)) {
-    throw new Error('INVALID_USER_REQUEST');
+    throw new Error('NO_USER_EXISTS_ERROR');
+  }
+
+  const userToUpdate = await UserModel.findById(user.id);
+  if (!userToUpdate) {
+    throw new Error('INVALID_USER_ERROR');
   }
 
   const validatedFile = validateFile(file);
   const newFileName = buildFileName(validatedFile);
-
-  if (/undefined/.test(newFileName)) {
-    throw new Error('UNDEFINED_FILENAME_ERROR');
-  }
 
   fs.renameSync(
     validatedFile.path,
@@ -70,23 +72,23 @@ const create = async (blog: Blog, file: RequestFile, user: RequestUser) => {
   );
 
   const tags = buildTagList(blog.tags);
+  const excerpt = buildExcerpt(blog.content);
 
   const blogToCreate = {
     ...blog,
+    excerpt,
     user: user.id,
     featuredImage: newFileName,
     tags
   };
 
   const createdBlog = await BlogModel.create(blogToCreate);
-  const userToUpdate = await UserModel.findById(user.id);
 
-  if (userToUpdate) {
-    userToUpdate.blogs = userToUpdate.blogs
-      ? userToUpdate.blogs.concat(createdBlog.id)
-      : [];
-    await userToUpdate.save();
-  }
+  userToUpdate.blogs = userToUpdate.blogs
+    ? userToUpdate.blogs.concat(createdBlog.id)
+    : [];
+
+  await userToUpdate.save();
 
   return createdBlog;
 };

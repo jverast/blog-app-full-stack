@@ -1,7 +1,7 @@
 import { Auth } from '../interfaces/auth.interface';
 import { User } from '../interfaces/user.interface';
 import UserModel from '../models/user.model';
-import { comparePassword, encryptPassword } from '../utils/encrypt.handle';
+import { comparePassword, encryptPassword } from '../utils/user.util';
 
 const register = async (obj: User) => {
   const isUser = await UserModel.findOne({ email: obj.email });

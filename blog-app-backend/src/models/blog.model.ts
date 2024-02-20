@@ -1,4 +1,4 @@
-import { model, Types, Schema, Model } from 'mongoose';
+import { model, Schema } from 'mongoose';
 import { Blog } from '../interfaces/blog.interface';
 
 const blogSchema = new Schema<Blog>(
